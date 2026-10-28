@@ -26,15 +26,11 @@ nav a{padding:12px 0;border-bottom:2px solid transparent}nav a.on{color:#E6C887;
 .soc{display:flex;gap:10px}.soc a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid var(--g);border-radius:50%}
 .soc .ic{width:20px;height:20px}
 .hero{position:relative;overflow:hidden;text-align:center;padding:40px 5vw 0}
-.lgo{width:60px;height:60px;display:block;margin:0 auto}
 .hero h1{margin:14px 0 0;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:0 .3em;line-height:1.12;background:linear-gradient(180deg,#F3E1AF,#D6B069 60%,#B58A45);-webkit-background-clip:text;background-clip:text;color:transparent}
 h1 b,h1 span{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,6.2vw,78px);font-weight:500;letter-spacing:.03em;text-transform:none}
 .tag{font:italic 500 clamp(20px,2.8vw,32px) 'Cormorant Garamond',serif;color:#DCCFB3;margin:8px 0 0}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:54px;padding:0 40px;background:linear-gradient(180deg,#D7B15E,#A97B38);color:#fff;font-weight:600;font-size:15px;letter-spacing:.08em;border-radius:40px;box-shadow:0 10px 25px rgba(212,175,55,.45);border:0;cursor:pointer}
 .cta:hover{background:linear-gradient(180deg,#E4C173,#B98B42);color:#fff}
-.row{display:flex;justify-content:center;gap:40px;margin-top:26px;padding-bottom:34px;flex-wrap:wrap}
-.sv{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.ring{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border:1px solid var(--g);border-radius:50%}
 section{max-width:1080px;margin:0 auto;padding:56px 5vw}
 h2{font:600 clamp(30px,4vw,44px) 'Cormorant Garamond',serif;text-align:center;margin:0 0 24px;color:#E6C887}
 .pl{list-style:none;margin:0 auto;padding:0;max-width:720px}.pl li{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:baseline;padding:14px 4px;border-bottom:1px solid rgba(228,196,127,.25);font-size:17px}.pl .du{color:#CFCBE3;font-size:14px}.pl .pc{color:#E6C887;font:600 22px 'Cormorant Garamond',serif}
@@ -49,43 +45,62 @@ footer{text-align:center;padding:30px 5vw 40px;border-top:1px solid rgba(228,196
 .pg{display:none}.pg.on{display:block;animation:pf .5s ease both}
 @keyframes pf{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* Estilo responsivo para o Calendário */
-.calendar-box {
-  max-width: 800px;
+/* Visualizador da Agenda do Firebase */
+.agenda-viewer {
+  max-width: 600px;
   margin: 0 auto;
   background: #0e1752;
-  padding: 16px;
-  border-radius: 10px;
+  padding: 24px;
+  border-radius: 12px;
   border: 1px solid rgba(228,196,127,.4);
+  text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
-.calendar-box iframe {
-  width: 100%;
-  height: 500px;
-  border: 0;
-  border-radius: 6px;
+.agenda-viewer input[type="date"] {
+  margin-bottom: 20px;
+  max-width: 260px;
+  text-align: center;
 }
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.slot {
+  padding: 12px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.slot.free { background: rgba(46, 139, 99, 0.2); color: #52c496; border: 1px solid #2e8b63; }
+.slot.busy { background: rgba(192, 57, 43, 0.2); color: #ef7a6c; border: 1px solid #c0392b; opacity: 0.8; }
 
 @media(max-width:860px){.bur{display:flex}nav{display:none;order:4;width:100%;flex-direction:column;align-items:center;background:rgba(8,16,70,.95);border:1px solid rgba(228,196,127,.35);border-radius:12px;padding:6px 0}header.open nav{display:flex}nav a{padding:12px 0;width:100%;text-align:center}}
 </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1" fill="#EBCF94" stroke="none"/></symbol>
+<symbol id="wa" viewBox="0 0 32 32"><path d="M16 4a12 12 0 0 0-10.3 18L4 28l6.2-1.6A12 12 0 1 0 16 4zM12 11c0 5 4 9 9 9l1.5-2.5-3-1.5-1.5 1.5c-1.5-.6-3-2-3.5-3.5l1.5-1.5-1.5-3z"/></symbol>
+</defs></svg>
+
 <header id="hdr">
-<button class="bur" id="bur" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<button class="bur" id="bur" aria-label="Menu"><span></span><span></span><span></span></button>
 <div class="fls">
 <button class="fl on" data-l="pt">PT</button>
 <button class="fl" data-l="es">ES</button>
 <button class="fl" data-l="en">EN</button>
 </div>
 <nav id="nv">
-<a href="#inicio" class="on">Início</a>
-<a href="#servicos">Serviços</a>
-<a href="#galeria">Galeria</a>
-<a href="#sobre">Sobre</a>
-<a href="#agenda">Agenda</a>
-<a href="#agendamento">Agendar</a>
-<a href="#contato">Contacto</a>
+<a href="#inicio" class="on" data-i="n1">Início</a>
+<a href="#servicos" data-i="n2">Serviços</a>
+<a href="#sobre" data-i="n4">Sobre</a>
+<a href="#agenda" data-i="n7">Agenda</a>
+<a href="#agendamento" data-i="n6">Agendar</a>
+<a href="#contato" data-i="n5">Contacto</a>
 </nav>
 <div class="soc">
 <a href="https://www.instagram.com/tay.nailss2" target="_blank" rel="noopener"><svg class="ic"><use href="#ig"/></svg></a>
@@ -96,53 +111,53 @@ footer{text-align:center;padding:30px 5vw 40px;border-top:1px solid rgba(228,196
 <main>
 <section class="hero pg on" id="inicio">
 <h1 class="serif"><b>TAYANE NAIL</b> <span>Design</span></h1>
-<p class="tag">Elegância em cada detalhe</p>
+<p class="tag" data-i="tag">Elegância em cada detalhe</p>
 <div style="margin-top:30px;">
-<a href="#agendamento" class="cta">Marcar Horário</a>
+<a href="#agendamento" class="cta" data-i="cta">Marcar Horário</a>
 </div>
 </section>
 
 <section class="pg" id="servicos">
-<h2>Tabela de Preços</h2>
+<h2 data-i="s_title">Serviços &amp; Tabela de Preços</h2>
 <ul class="pl">
-<li><span>Manicure Simples / Gelinho</span><span class="du">45 min</span><span class="pc">15 €</span></li>
-<li><span>Pedicure Completa</span><span class="du">60 min</span><span class="pc">20 €</span></li>
-<li><span>Extensão em Gel / Acrigel</span><span class="du">120 min</span><span class="pc">35 €</span></li>
-<li><span>Manutenção de Gel</span><span class="du">90 min</span><span class="pc">25 €</span></li>
+<li><span data-i="p1">Manicure Simples / Gelinho</span><span class="du">45 min</span><span class="pc">15 €</span></li>
+<li><span data-i="p2">Pedicure Completa</span><span class="du">60 min</span><span class="pc">20 €</span></li>
+<li><span data-i="p3">Extensão em Gel / Acrigel</span><span class="du">120 min</span><span class="pc">35 €</span></li>
+<li><span data-i="p4">Manutenção de Gel</span><span class="du">90 min</span><span class="pc">25 €</span></li>
+<li><span data-i="p5">Nail Art (por unha)</span><span class="du">15 min</span><span class="pc">A partir de 2 €</span></li>
 </ul>
 </section>
 
-<section class="pg" id="galeria">
-<h2>Galeria de Trabalhos</h2>
-<p style="text-align:center; color:#CFCBE3;">Espaço reservado para as suas fotos.</p>
-</section>
-
 <section class="pg" id="sobre">
-<h2>Sobre Mim</h2>
+<h2 data-i="a_title">Sobre Mim</h2>
 <div class="sob">
-<p>Especialista em estética das unhas no Centro Comercial Babilónia em Amadora. Trabalho com foco na excelência, higiene e design personalizado.</p>
+<p data-i="a_p1">Olá! Sou a Tayane, especialista em estética das unhas com foco em cuidados de alta qualidade e elegância.</p>
+<p data-i="a_p2">Localizada no Centro Comercial Babilónia em Amadora, o meu espaço foi pensado para oferecer uma experiência relaxante e higiene rigorosa.</p>
 </div>
 </section>
 
-<!-- ABA DE AGENDA COM O SEU GOOGLE CALENDAR -->
+<!-- ABA AGENDA - LEITURA EM TEMPO REAL DO FIREBASE -->
 <section class="pg" id="agenda">
-<h2>Confira a minha agenda</h2>
-<p style="text-align: center; margin-bottom: 24px; color: #CFCBE3;">
-  Consulte os dias e horários disponíveis antes de marcar o seu atendimento:
+<h2 data-i="agenda_title">Disponibilidade de Horários</h2>
+<p style="text-align: center; margin-bottom: 20px; color: #CFCBE3;" data-i="agenda_sub">
+  Selecione uma data para consultar os horários livres e ocupados:
 </p>
-<div class="calendar-box">
-  <iframe src="https://calendar.google.com/calendar/embed?src=taayane.mendes%40gmail.com&ctz=Europe%2FLisbon" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+<div class="agenda-viewer">
+  <input type="date" id="searchDate">
+  <div id="slotsContainer" class="slots-grid">
+    <p style="grid-column: 1/-1; color: #CFCBE3;">A carregar a agenda...</p>
+  </div>
 </div>
 </section>
 
 <section class="pg" id="agendamento">
-<h2>Marcar Agendamento</h2>
+<h2 data-i="b_title">Marcar Agendamento</h2>
 <form id="frm">
-<label>Nome Completo<input type="text" id="fn" required></label>
-<label>Contacto WhatsApp<input type="tel" id="fp" placeholder="+351 912 842 535" required></label>
-<label>Serviço Pretendido
+<label><span data-i="f_name">Nome Completo</span><input type="text" id="fn" required></label>
+<label><span data-i="f_phone">Contacto WhatsApp</span><input type="tel" id="fp" placeholder="+351 912 842 535" required></label>
+<label><span data-i="f_serv">Serviço Pretendido</span>
 <select id="fs" required>
-<option value="">Selecione...</option>
+<option value="" data-i="f_sel">Selecione...</option>
 <option value="Manicure">Manicure / Gelinho</option>
 <option value="Pedicure">Pedicure Completa</option>
 <option value="Alongamento">Alongamento em Gel</option>
@@ -150,18 +165,19 @@ footer{text-align:center;padding:30px 5vw 40px;border-top:1px solid rgba(228,196
 </select>
 </label>
 <div class="two">
-<label>Data<input type="date" id="fd" required></label>
-<label>Hora<input type="time" id="ft" required></label>
+<label><span data-i="f_date">Data</span><input type="date" id="fd" required></label>
+<label><span data-i="f_time">Hora</span><input type="time" id="ft" required></label>
 </div>
-<button type="submit" class="cta">Confirmar por WhatsApp</button>
+<button type="submit" class="cta" data-i="f_sub">Confirmar por WhatsApp</button>
 </form>
 </section>
 
 <section class="pg" id="contato">
-<h2>Contacto &amp; Localização</h2>
+<h2 data-i="c_title">Contacto &amp; Localização</h2>
 <div class="ct">
 <p>📍 <strong>Amadora, Portugal</strong><br>Centro Comercial Babilónia</p>
 <p>📞 <strong>WhatsApp:</strong> +351 912 842 535</p>
+<p>🕒 <strong>Horário:</strong> Segunda a Sábado, mediante marcação.</p>
 </div>
 </section>
 </main>
@@ -171,6 +187,14 @@ footer{text-align:center;padding:30px 5vw 40px;border-top:1px solid rgba(228,196
 </footer>
 
 <script>
+// DICIONÁRIO MULTILINGUE
+const dict = {
+  pt: { n1:"Início", n2:"Serviços", n4:"Sobre", n7:"Agenda", n6:"Agendar", n5:"Contacto", tag:"Elegância em cada detalhe", cta:"Marcar Horário", s_title:"Serviços & Tabela de Preços", p1:"Manicure Simples / Gelinho", p2:"Pedicure Completa", p3:"Extensão em Gel / Acrigel", p4:"Manutenção de Gel", p5:"Nail Art (por unha)", a_title:"Sobre Mim", a_p1:"Olá! Sou a Tayane, especialista em estética das unhas com foco em cuidados de alta qualidade e elegância.", a_p2:"Localizada no Centro Comercial Babilónia em Amadora, o meu espaço foi pensado para oferecer uma experiência relaxante e higiene rigorosa.", agenda_title:"Disponibilidade de Horários", agenda_sub:"Selecione uma data para consultar os horários livres e ocupados:", b_title:"Marcar Agendamento", f_name:"Nome Completo", f_phone:"Contacto WhatsApp", f_serv:"Serviço Pretendido", f_sel:"Selecione...", f_date:"Data", f_time:"Hora", f_sub:"Confirmar por WhatsApp", c_title:"Contacto & Localização" },
+  es: { n1:"Inicio", n2:"Servicios", n4:"Sobre mí", n7:"Agenda", n6:"Reservar", n5:"Contacto", tag:"Elegancia en cada detalle", cta:"Reservar Cita", s_title:"Servicios y Precios", p1:"Manicura Básica / Gel", p2:"Pedicura Completa", p3:"Extensión en Gel / Acrigel", p4:"Mantenimiento de Gel", p5:"Nail Art (por uña)", a_title:"Sobre Mí", a_p1:"¡Hola! Soy Tayane, especialista en estética de uñas con años de experiencia.", a_p2:"Ubicada en el Centro Comercial Babilónia en Amadora.", agenda_title:"Disponibilidad de Horarios", agenda_sub:"Seleccione una fecha para ver los horarios disponibles:", b_title:"Reservar Cita", f_name:"Nombre Completo", f_phone:"WhatsApp de Contacto", f_serv:"Servicio Deseado", f_sel:"Seleccione...", f_date:"Fecha", f_time:"Hora", f_sub:"Confirmar por WhatsApp", c_title:"Contacto y Ubicación" },
+  en: { n1:"Home", n2:"Services", n4:"About", n7:"Schedule", n6:"Book Now", n5:"Contact", tag:"Elegance in every detail", cta:"Book Appointment", s_title:"Services & Pricing", p1:"Basic Manicure / Gel", p2:"Full Pedicure", p3:"Gel / Acrigel Extensions", p4:"Gel Maintenance", p5:"Nail Art (per nail)", a_title:"About Me", a_p1:"Hi! I'm Tayane, a nail care specialist delivering high quality and elegant service.", a_p2:"Located at Babilónia Shopping Center in Amadora.", agenda_title:"Schedule Availability", agenda_sub:"Select a date to check free and busy times:", b_title:"Book Appointment", f_name:"Full Name", f_phone:"WhatsApp Phone", f_serv:"Service Needed", f_sel:"Select...", f_date:"Date", f_time:"Time", f_sub:"Confirm via WhatsApp", c_title:"Contact & Location" }
+};
+
+// NAVEGAÇÃO ENTRE SECÇÕES
 const navLinks = document.querySelectorAll('nav a, .cta[href^="#"]');
 const sections = document.querySelectorAll('.pg');
 const bur = document.getElementById('bur');
@@ -186,22 +210,85 @@ function showPage(targetId) {
     else s.classList.remove('on');
   });
   hdr.classList.remove('open');
-  bur.setAttribute('aria-expanded', 'false');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 navLinks.forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    const targetId = link.getAttribute('href').replace('#', '');
-    showPage(targetId);
+    showPage(link.getAttribute('href').replace('#', ''));
   });
 });
 
-bur.addEventListener('click', () => {
-  hdr.classList.toggle('open');
+bur.addEventListener('click', () => hdr.classList.toggle('open'));
+
+// TROCA DE IDIOMA
+const langBtns = document.querySelectorAll('.fl');
+langBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lang = btn.getAttribute('data-l');
+    langBtns.forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    if (dict[lang]) {
+      document.querySelectorAll('[data-i]').forEach(el => {
+        const key = el.getAttribute('data-i');
+        if (dict[lang][key]) {
+          if (el.tagName === 'INPUT' || el.tagName === 'OPTION') {
+            el.textContent ? el.textContent = dict[lang][key] : el.placeholder = dict[lang][key];
+          } else {
+            el.textContent = dict[lang][key];
+          }
+        }
+      });
+    }
+  });
 });
 
+// LEITURA DO FIREBASE NO SITE (MODO READ-ONLY)
+const FIREBASE_DB = "https://calendario-tayane-nail-design-default-rtdb.europe-west1.firebasedatabase.app/agendamentos.json";
+const searchDateInput = document.getElementById('searchDate');
+const slotsContainer = document.getElementById('slotsContainer');
+
+// Preenche a data de hoje por defeito
+searchDateInput.value = new Date().toISOString().split('T')[0];
+
+const defaultHours = ["09:00", "10:30", "12:00", "14:00", "15:30", "17:00", "18:30"];
+
+async function checkAvailability() {
+  const selectedDate = searchDateInput.value;
+  slotsContainer.innerHTML = "<p style='grid-column: 1/-1; color: #CFCBE3;'>A consultar a agenda...</p>";
+
+  try {
+    const res = await fetch(FIREBASE_DB);
+    const data = await res.json();
+    const busyHours = [];
+
+    if (data) {
+      Object.values(data).forEach(item => {
+        if (item.data === selectedDate) {
+          busyHours.push(item.hora);
+        }
+      });
+    }
+
+    slotsContainer.innerHTML = "";
+    defaultHours.forEach(hour => {
+      const isBusy = busyHours.includes(hour);
+      const slotDiv = document.createElement('div');
+      slotDiv.className = `slot ${isBusy ? 'busy' : 'free'}`;
+      slotDiv.textContent = `${hour} - ${isBusy ? 'Ocupado' : 'Livre'}`;
+      slotsContainer.appendChild(slotDiv);
+    });
+
+  } catch (err) {
+    slotsContainer.innerHTML = "<p style='grid-column: 1/-1; color: #CFCBE3;'>Agenda sem registos para esta data.</p>";
+  }
+}
+
+searchDateInput.addEventListener('change', checkAvailability);
+checkAvailability();
+
+// ENVIO DE MENSAGEM WHATSAPP
 document.getElementById('frm').addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('fn').value;
